@@ -1,7 +1,9 @@
 package com.redwrench.funslingers;
 
 import java.util.List;
+
 import com.redwrench.android.framework.Game;
+import com.redwrench.android.framework.Graphics;
 import com.redwrench.android.framework.Input.TouchEvent;
 import com.redwrench.android.framework.Screen;
 
@@ -25,6 +27,12 @@ public class GameScreen extends Screen{
 	@Override
 	public void update(float deltaTime) {
 		// TODO Auto-generated method stub
+		List<TouchEvent> events = game.getInput().getTouchEvents();
+		
+		//update game state
+		if(gameState == GameState.Paused)
+			updatePaused(events);
+		
 		
 	}
 
@@ -52,7 +60,7 @@ public class GameScreen extends Screen{
 		
 	}
 	
-	public void updatePaused(List<TouchEvent> events){
+	private void updatePaused(List<TouchEvent> events){
 		int eventCount = events.size();
 		for(int i = 0; i < eventCount; i++){
 			TouchEvent event = events.get(i);
@@ -64,6 +72,17 @@ public class GameScreen extends Screen{
 			
 		}
 		
+	}
+	
+	
+	private void updateRunning(){
+		
+	}
+	
+	private void drawPausedUI(){
+		Graphics g = game.getGraphics();
+		
+		g.drawPixmap(Assets.pauseMenu, 80, 100);
 	}
 
 }
