@@ -1,5 +1,6 @@
 package com.redwrench.android.framework.implementation;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -29,6 +30,7 @@ public abstract class DroidGame extends Activity implements Game {
 	WakeLock wakeLock;
 	Audio audio;
 	
+	@SuppressLint("NewApi")
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -51,7 +53,7 @@ public abstract class DroidGame extends Activity implements Game {
 		
 		//getDefaultDisplay().getWidth has been deprecated.  will need to account for compatibility
 		int appSDK = android.os.Build.VERSION.SDK_INT;
-		if(appSDK <= android.os.Build.VERSION_CODES.FROYO){
+		if(appSDK >= android.os.Build.VERSION_CODES.FROYO && appSDK <= android.os.Build.VERSION_CODES.HONEYCOMB_MR1){
 			scaleX = (float) frameBufferWidth / getWindowManager().getDefaultDisplay()
 					.getWidth();
 			
@@ -61,7 +63,7 @@ public abstract class DroidGame extends Activity implements Game {
 		}
 		else{
 			Point outSize = new Point();
-			
+			getWindowManager().getDefaultDisplay().getSize(outSize);
 			scaleX = (float) outSize.x;
 			scaleY = (float) outSize.y;
 			
