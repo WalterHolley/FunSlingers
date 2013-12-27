@@ -29,6 +29,8 @@ public abstract class DroidGame extends Activity implements Game {
 	Screen screen;
 	WakeLock wakeLock;
 	Audio audio;
+	int ScreenX;
+	int ScreenY;
 	
 	@SuppressLint("NewApi")
 	@SuppressWarnings("deprecation")
@@ -54,21 +56,26 @@ public abstract class DroidGame extends Activity implements Game {
 		//getDefaultDisplay().getWidth has been deprecated.  will need to account for compatibility
 		int appSDK = android.os.Build.VERSION.SDK_INT;
 		if(appSDK >= android.os.Build.VERSION_CODES.FROYO && appSDK <= android.os.Build.VERSION_CODES.HONEYCOMB_MR1){
-			scaleX = (float) frameBufferWidth / getWindowManager().getDefaultDisplay()
+			ScreenX = getWindowManager().getDefaultDisplay()
 					.getWidth();
-			
-			scaleY = (float) frameBufferHeight / getWindowManager().getDefaultDisplay()
+			ScreenY = getWindowManager().getDefaultDisplay()
 					.getHeight();
+			
+			
 			
 		}
 		else{
 			Point outSize = new Point();
 			getWindowManager().getDefaultDisplay().getSize(outSize);
-			scaleX = (float) outSize.x;
-			scaleY = (float) outSize.y;
+			ScreenX = outSize.x;
+			ScreenY = outSize.y;
 			
 		}
 			
+		scaleX = (float) frameBufferWidth / ScreenX;
+		
+		scaleY = (float) frameBufferHeight / ScreenY;
+		
 		renderView = new FastRenderView(this, frameBuffer);
 		graphics = new DroidGraphics(getAssets(), frameBuffer);
 		fileOps = new DroidFileOps(getAssets());

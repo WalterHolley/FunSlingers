@@ -16,5 +16,6 @@ public interface Game {
 	public void onPause();
 	
 	public Screen getStartScreen();
+	
 
 }
