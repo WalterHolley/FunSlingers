@@ -2,10 +2,16 @@ package com.redwrench.funslingers;
 
 import java.util.List;
 
+import android.content.Context;
+import android.graphics.Point;
+import android.app.Activity;
+
+
 import com.redwrench.android.framework.Game;
 import com.redwrench.android.framework.Graphics;
 import com.redwrench.android.framework.Input.TouchEvent;
 import com.redwrench.android.framework.Screen;
+import com.redwrench.android.framework.implementation.DroidGame;
 
 public class GameScreen extends Screen{
 	enum GameState{
@@ -18,6 +24,8 @@ public class GameScreen extends Screen{
 	
 	GameLib gameLib;
 	GameState gameState = GameState.Paused;
+	private Context cxt;
+	
 	
 	public GameScreen(Game game){
 		super(game);
@@ -33,13 +41,17 @@ public class GameScreen extends Screen{
 		if(gameState == GameState.Paused)
 			updatePaused(events);
 		
-		
 	}
 
 	@Override
 	public void present(float deltaTime) {
 		// TODO Auto-generated method stub
+		Graphics g = game.getGraphics();
 		
+		g.drawPixmap(Assets.background, 0, 0);
+		
+		if(gameState == GameState.Paused)
+			drawPausedUI();
 	}
 
 	@Override
@@ -83,6 +95,12 @@ public class GameScreen extends Screen{
 		Graphics g = game.getGraphics();
 		
 		g.drawPixmap(Assets.pauseMenu, 80, 100);
+	}
+	
+	private void drawReadyUI(){
+		Graphics g = game.getGraphics();
+		g.drawPixmap(Assets.readyButton,, y);
+		
 	}
 
 }
