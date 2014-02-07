@@ -4,8 +4,8 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.Point;
+import android.view.WindowManager;
 import android.app.Activity;
-
 
 import com.redwrench.android.framework.Game;
 import com.redwrench.android.framework.Graphics;
@@ -24,7 +24,7 @@ public class GameScreen extends Screen{
 	
 	GameLib gameLib;
 	GameState gameState = GameState.Paused;
-	private Context cxt;
+	
 	
 	
 	public GameScreen(Game game){
@@ -99,7 +99,7 @@ public class GameScreen extends Screen{
 	
 	private void drawReadyUI(){
 		Graphics g = game.getGraphics();
-		g.drawPixmap(Assets.readyButton,, y);
+		g.drawPixmap(Assets.readyButton, game.ScreenWidth / 2, game.ScreenHeight / 2);
 		
 	}
 
