@@ -6,10 +6,17 @@ import com.redwrench.android.framework.Game;
 import com.redwrench.android.framework.Graphics;
 import com.redwrench.android.framework.Screen;
 import com.redwrench.android.framework.Input.TouchEvent;
+import com.redwrench.android.framework.implementation.DroidGame;
 
 public class MainMenuScreen extends Screen{
+	
+	int screenHeight;
+	int screenWidth;
 	public MainMenuScreen(Game game){
 		super(game);
+		screenHeight = ((DroidGame)game).ScreenY;
+		screenWidth = ((DroidGame)game).ScreenX;
+		
 	}
 
 	@Override
@@ -60,7 +67,7 @@ public class MainMenuScreen extends Screen{
 		// TODO Auto-generated method stub
 		Graphics graphics = game.getGraphics();
 		graphics.drawPixmap(Assets.background, 0, 0);
-		graphics.drawPixmap(Assets.mainMenu, 64, 220);
+		graphics.drawPixmap(Assets.mainMenu, screenWidth / 4, screenHeight / 5);
 		
 		//handle sound settings
 	}

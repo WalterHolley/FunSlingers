@@ -29,8 +29,8 @@ public abstract class DroidGame extends Activity implements Game {
 	Screen screen;
 	WakeLock wakeLock;
 	Audio audio;
-	int ScreenX;
-	int ScreenY;
+	public int ScreenX;
+	public int ScreenY;
 	
 	@SuppressLint("NewApi")
 	@SuppressWarnings("deprecation")

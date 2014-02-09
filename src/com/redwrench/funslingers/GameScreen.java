@@ -13,6 +13,7 @@ import com.redwrench.android.framework.Input.TouchEvent;
 import com.redwrench.android.framework.Screen;
 import com.redwrench.android.framework.implementation.DroidGame;
 
+
 public class GameScreen extends Screen{
 	enum GameState{
 		Ready, 
@@ -24,12 +25,16 @@ public class GameScreen extends Screen{
 	
 	GameLib gameLib;
 	GameState gameState = GameState.Paused;
-	private Context cxt;
+	int screenHeight = 0;
+	int screenWidth = 0;
 	
 	
 	public GameScreen(Game game){
 		super(game);
 		gameLib = new GameLib();
+		
+		screenHeight = ((DroidGame)game).ScreenY;
+		screenWidth = ((DroidGame)game).ScreenX;
 	}
 
 	@Override
@@ -40,6 +45,8 @@ public class GameScreen extends Screen{
 		//update game state
 		if(gameState == GameState.Paused)
 			updatePaused(events);
+		if(gameState == GameState.Ready)
+			updateReady(events);
 		
 	}
 
@@ -91,6 +98,19 @@ public class GameScreen extends Screen{
 		
 	}
 	
+	private void updateReady(List<TouchEvent> touchEvents){
+		int len = touchEvents.size();
+		for(int i = 0; i < len; i++){
+			TouchEvent event = touchEvents.get(i);
+			if(event.x > (screenWidth / 2) - 112 && event.x <= (screenWidth / 2) + 112){
+				if(event.y > (screenHeight / 2) - 48 && event.y <= (screenHeight / 2) + 48){
+					gameState = GameState.Running;
+					return;
+				}
+			}
+		}
+	}
+	
 	private void drawPausedUI(){
 		Graphics g = game.getGraphics();
 		
@@ -99,7 +119,7 @@ public class GameScreen extends Screen{
 	
 	private void drawReadyUI(){
 		Graphics g = game.getGraphics();
-		g.drawPixmap(Assets.readyButton,, y);
+		g.drawPixmap(Assets.readyButton, screenHeight / 2, screenWidth / 2);
 		
 	}
 
