@@ -2,6 +2,8 @@ package com.redwrench.funslingers;
 
 import java.util.List;
 
+import android.graphics.Color;
+
 import com.redwrench.android.framework.Game;
 import com.redwrench.android.framework.Graphics;
 import com.redwrench.android.framework.Screen;
@@ -41,14 +43,14 @@ public class MainMenuScreen extends Screen{
 				}
 				
 				//Play game button pressed
-				if(inBounds(event, 64, 220, 192, 42)){
+				if(inBounds(event, 100, 140, 42, 160)){
 					game.setScreen(new GameScreen(game));
 					//play button sound
 					return;
 				}
 				
 				//Help screen button pressed
-				if(inBounds(event, 64, 220 + 42, 192, 42)){
+				if(inBounds(event, 100, 140 + 42, 192, 42)){
 					game.setScreen(new HelpScreen(game));
 					//play button sound
 					return;
@@ -67,7 +69,8 @@ public class MainMenuScreen extends Screen{
 		// TODO Auto-generated method stub
 		Graphics graphics = game.getGraphics();
 		graphics.drawPixmap(Assets.background, 0, 0);
-		graphics.drawPixmap(Assets.mainMenu, screenWidth / 4, screenHeight / 5);
+		graphics.drawPixmap(Assets.mainMenu, 100, 140);
+		
 		
 		//handle sound settings
 	}
@@ -91,6 +94,7 @@ public class MainMenuScreen extends Screen{
 	}
 	
 	private boolean inBounds(TouchEvent event, int x, int y, int height, int width){
+		game.getGraphics().drawRectangle(x, y, width, height, Color.GREEN);
 		if(event.x > x && event.x < x + width - 1 &&
 				event.y > y && event.y < y + height - 1){
 			return true;

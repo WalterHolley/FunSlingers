@@ -24,7 +24,7 @@ public class GameScreen extends Screen{
 	}
 	
 	GameLib gameLib;
-	GameState gameState = GameState.Paused;
+	GameState gameState = GameState.Ready;
 	int screenHeight = 0;
 	int screenWidth = 0;
 	
@@ -59,6 +59,9 @@ public class GameScreen extends Screen{
 		
 		if(gameState == GameState.Paused)
 			drawPausedUI();
+		if(gameState == GameState.Ready)
+			drawReadyUI();
+		
 	}
 
 	@Override
@@ -119,7 +122,7 @@ public class GameScreen extends Screen{
 	
 	private void drawReadyUI(){
 		Graphics g = game.getGraphics();
-		g.drawPixmap(Assets.readyButton, screenHeight / 2, screenWidth / 2);
+		g.drawPixmap(Assets.readyButton, screenHeight / 5, screenWidth / 5);
 		
 	}
 
