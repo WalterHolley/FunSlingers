@@ -3,8 +3,10 @@ package com.redwrench.funslingers;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.app.Activity;
+
 
 
 import com.redwrench.android.framework.Game;
@@ -61,7 +63,8 @@ public class GameScreen extends Screen{
 			drawPausedUI();
 		if(gameState == GameState.Ready)
 			drawReadyUI();
-		
+		if(gameState == GameState.Running)
+			drawRunningUI();
 	}
 
 	@Override
@@ -105,8 +108,8 @@ public class GameScreen extends Screen{
 		int len = touchEvents.size();
 		for(int i = 0; i < len; i++){
 			TouchEvent event = touchEvents.get(i);
-			if(event.x > (screenWidth / 2) - 112 && event.x <= (screenWidth / 2) + 112){
-				if(event.y > (screenHeight / 2) - 48 && event.y <= (screenHeight / 2) + 48){
+			if(event.x > 0 && event.x <= 320){
+				if(event.y > 0 && event.y <= 480){
 					gameState = GameState.Running;
 					return;
 				}
@@ -122,8 +125,13 @@ public class GameScreen extends Screen{
 	
 	private void drawReadyUI(){
 		Graphics g = game.getGraphics();
-		g.drawPixmap(Assets.readyButton, screenHeight / 5, screenWidth / 5);
+		g.drawPixmap(Assets.readyButton, 43, 140);
 		
+	}
+	
+	private void drawRunningUI(){
+		Graphics g = game.getGraphics();
+		g.drawLine(0, 240, 320, 240, Color.BLACK);
 	}
 
 }
