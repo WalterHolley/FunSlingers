@@ -1,10 +1,12 @@
 package com.redwrench.android.framework;
 
+
 public abstract class Screen {
 	protected final Game game;
 	
 	public  Screen(Game game){
 		this.game = game;
+		
 	}
 	
 	public abstract void update(float deltaTime);
