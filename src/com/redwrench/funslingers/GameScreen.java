@@ -49,7 +49,8 @@ public class GameScreen extends Screen{
 			updatePaused(events);
 		if(gameState == GameState.Ready)
 			updateReady(events);
-		
+		if(gameState == GameState.Running)
+			updateRunning(events);
 	}
 
 	@Override
@@ -69,7 +70,7 @@ public class GameScreen extends Screen{
 
 	@Override
 	public void pause() {
-		// TODO Auto-generated method stub
+		// The Game screen cannot be paused
 		
 	}
 
@@ -100,7 +101,32 @@ public class GameScreen extends Screen{
 	}
 	
 	
-	private void updateRunning(){
+	private void updateRunning(List<TouchEvent> events){
+		
+		if(gameLib.gameStarted){
+			int eventCount = events.size();
+			for(int i = 0; i < eventCount; i++ ){
+				TouchEvent event = events.get(i);
+			
+				if(event.type == TouchEvent.TOUCH_UP){
+					//play sound
+					if(gameLib.canShoot){
+						//play gun sound
+						if(!gameLib.shotFired){
+							gameLib.Shoot();
+						}
+						
+					}
+				
+				}
+			
+			}
+		}
+		else{
+			gameLib.gameStarted = true;
+			
+		}
+		gameLib.update(1);
 		
 	}
 	

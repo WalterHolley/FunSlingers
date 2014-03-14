@@ -9,6 +9,7 @@ public class GameLib {
 	public boolean gameOver = false;
 	public boolean canShoot = false;
 	public boolean shotFired = false;
+	public boolean gameStarted = false;
 	float tickTime = 0;
 	int maxGameTime = 0;
 	
