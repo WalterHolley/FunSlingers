@@ -1,4 +1,6 @@
 package com.redwrench.android.framework.implementation;
+import java.io.IOException;
+
 import android.app.Activity;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
@@ -8,6 +10,7 @@ import android.media.SoundPool;
 import com.redwrench.android.framework.Audio;
 import com.redwrench.android.framework.Music;
 import com.redwrench.android.framework.Sound;
+import com.redwrench.android.framework.implementation.DroidSound;
 
 public class DroidAudio implements Audio {
 	AssetManager assets;
@@ -20,17 +23,29 @@ public class DroidAudio implements Audio {
 	}
 	
 	public Music newMusic(String fileName){
-		/*try{
+		try{
 			AssetFileDescriptor assetFileDescriptor = assets.openFd(fileName);
-			return null;
-		}*/
-		return null;
+			soundPool.load(assetFileDescriptor, 0);
+			return new DroidMusic(assetFileDescriptor);
+			
+		}
+		catch(IOException ex){
+			throw new RuntimeException("Couldn't load music file: " + fileName);
+		}
+		
 	}
 
 	@Override
 	public Sound newSound(String fileName) {
-		// TODO Auto-generated method stub
-		return null;
+		try{
+			AssetFileDescriptor assetFileDescriptor = assets.openFd(fileName);
+			int soundId = soundPool.load(assetFileDescriptor, 0);
+			return new DroidSound(soundId, soundPool);
+		}
+		catch(IOException e){
+			throw new RuntimeException("couldn't load sound " + fileName);
+		}
 	}
+		
 
 }

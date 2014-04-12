@@ -11,6 +11,7 @@ import android.app.Activity;
 
 import com.redwrench.android.framework.Game;
 import com.redwrench.android.framework.Graphics;
+import com.redwrench.android.framework.Audio;
 import com.redwrench.android.framework.Input.TouchEvent;
 import com.redwrench.android.framework.Screen;
 import com.redwrench.android.framework.implementation.DroidGame;
@@ -102,18 +103,24 @@ public class GameScreen extends Screen{
 	
 	
 	private void updateRunning(List<TouchEvent> events){
-		
-		if(gameLib.gameStarted){
+		Audio a = game.getAudio();
+		if(gameLib.isGameStarted()){
 			int eventCount = events.size();
 			for(int i = 0; i < eventCount; i++ ){
 				TouchEvent event = events.get(i);
 			
 				if(event.type == TouchEvent.TOUCH_UP){
+					//perform no actions if the game is over
+					if(gameLib.isGameOver())
+						return;
 					//play sound
-					if(gameLib.canShoot){
+					if(gameLib.canUserShoot()){
 						//play gun sound
-						if(!gameLib.shotFired){
-							gameLib.Shoot();
+						if(!gameLib.wasShotFired()){
+							Assets.shoot.play(1);
+							gameLib.Shoot(event.y);
+							
+							gameState = GameState.GameOver;
 						}
 						
 					}
@@ -123,10 +130,10 @@ public class GameScreen extends Screen{
 			}
 		}
 		else{
-			gameLib.gameStarted = true;
+			gameLib.init();
 			
 		}
-		gameLib.update(1);
+		gameLib.update(10);
 		
 	}
 	

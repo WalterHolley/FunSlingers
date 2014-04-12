@@ -44,6 +44,7 @@ public class MainMenuScreen extends Screen{
 				
 				//Play game button pressed
 				if(inBounds(event, 100, 140, 42, 160)){
+					Assets.menuSelect.play(1);
 					game.setScreen(new GameScreen(game));
 					//play button sound
 					return;
