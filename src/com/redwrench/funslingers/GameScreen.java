@@ -1,17 +1,9 @@
 package com.redwrench.funslingers;
 
 import java.util.List;
-
-import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Point;
-import android.app.Activity;
-
-
-
 import com.redwrench.android.framework.Game;
 import com.redwrench.android.framework.Graphics;
-import com.redwrench.android.framework.Audio;
 import com.redwrench.android.framework.Input.TouchEvent;
 import com.redwrench.android.framework.Screen;
 import com.redwrench.android.framework.implementation.DroidGame;
@@ -52,6 +44,8 @@ public class GameScreen extends Screen{
 			updateReady(events);
 		if(gameState == GameState.Running)
 			updateRunning(events);
+		if(gameState == GameState.GameOver)
+			updateGameOver(events);
 	}
 
 	@Override
@@ -67,6 +61,8 @@ public class GameScreen extends Screen{
 			drawReadyUI();
 		if(gameState == GameState.Running)
 			drawRunningUI();
+		if(gameState == GameState.GameOver)
+			drawGameOverUI();
 	}
 
 	@Override
@@ -103,7 +99,6 @@ public class GameScreen extends Screen{
 	
 	
 	private void updateRunning(List<TouchEvent> events){
-		Audio a = game.getAudio();
 		if(gameLib.isGameStarted()){
 			int eventCount = events.size();
 			for(int i = 0; i < eventCount; i++ ){
@@ -137,6 +132,49 @@ public class GameScreen extends Screen{
 		
 	}
 	
+	private void updateGameOver(List<TouchEvent> touchEvents){
+		int len = touchEvents.size();
+		for(int i = 0; i < len; i++){
+			TouchEvent event = touchEvents.get(i);
+			//determine yes/no button touch
+			//Buttons for player 2 side
+			if(gameLib.didPlayer1Win()){
+				if(event.x <= 80){
+					if(event.y >= 100 && event.y <= 180){
+						//No was selected, return to menu
+						Assets.menuSelect.play(1);
+						game.setScreen(new MainMenuScreen(game));
+					}
+				}
+				if(event.x <= 320 && event.x >= 240){
+					if(event.y >= 100 && event.y <=180){
+						//Yes was selected.  restart game
+						Assets.menuSelect.play(1);
+						game.setScreen(new GameScreen(game));
+					}
+				}
+			}
+			else{
+				//player one side
+				if(event.x <= 80){
+					if(event.y >= 300 && event.y <= 380){
+						//Yes was selected
+						Assets.menuSelect.play(1);
+						game.setScreen(new GameScreen(game));
+					}
+				}
+				if(event.x <= 320 && event.x >= 240){
+					if(event.y >= 300 && event.y <= 380){
+						//No was selected
+						Assets.menuSelect.play(1);
+						game.setScreen(new MainMenuScreen(game));
+					}
+				}
+			}
+			
+		}
+	}
+	
 	private void updateReady(List<TouchEvent> touchEvents){
 		int len = touchEvents.size();
 		for(int i = 0; i < len; i++){
@@ -164,7 +202,24 @@ public class GameScreen extends Screen{
 	
 	private void drawRunningUI(){
 		Graphics g = game.getGraphics();
-		g.drawLine(0, 240, 320, 240, Color.BLACK);
+		if(gameLib.canUserShoot()){
+			g.drawPixmap(Assets.fire, 0, 200);
+		}
+		else{
+			g.drawPixmap(Assets.armed, 0, 160);
+		}
+	}
+	
+	private void drawGameOverUI(){
+		Graphics g = game.getGraphics();
+		if(gameLib.didPlayer1Win()){
+			g.drawPixmap(Assets.winResult1, 0, 200);
+			g.drawPixmap(Assets.playAgain2, 0, 100);
+		}
+		else{
+			g.drawPixmap(Assets.winResult2, 0, 200);
+			g.drawPixmap(Assets.playAgain1, 0, 300);
+		}
 	}
 
 }

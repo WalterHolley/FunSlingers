@@ -9,6 +9,13 @@ public class Assets {
 	public static Pixmap pauseMenu;
 	public static Pixmap readyButton;
 	public static Pixmap mainMenu;
+	public static Pixmap winResult1;
+	public static Pixmap winResult2;
+	public static Pixmap winResult3;
+	public static Pixmap fire;
+	public static Pixmap armed;
+	public static Pixmap playAgain1;
+	public static Pixmap playAgain2;
 	
 	//Sounds
 	public static Sound menuSelect;

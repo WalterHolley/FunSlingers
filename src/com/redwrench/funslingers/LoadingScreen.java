@@ -21,6 +21,12 @@ public class LoadingScreen extends Screen {
 		Assets.mainMenu = graphics.newPixmap("mainmenu.png", PixmapFormat.ARGB4444);
 		Assets.pauseMenu = graphics.newPixmap("pause.png", PixmapFormat.ARGB4444);
 		Assets.readyButton = graphics.newPixmap("ready.png", PixmapFormat.ARGB4444);
+		Assets.fire = graphics.newPixmap("fire.png", PixmapFormat.ARGB4444);
+		Assets.winResult1 = graphics.newPixmap("result1.png", PixmapFormat.ARGB4444);
+		Assets.winResult2 = graphics.newPixmap("result2.png", PixmapFormat.ARGB4444);
+		Assets.armed = graphics.newPixmap("armed.png", PixmapFormat.ARGB4444);
+		Assets.playAgain1 = graphics.newPixmap("playagain1.png", PixmapFormat.ARGB4444);
+		Assets.playAgain2 = graphics.newPixmap("playagain2.png", PixmapFormat.ARGB4444);
 		
 		Assets.gameOver = audio.newSound(soundDir + "shells_falls.wav");
 		Assets.menuSelect = audio.newSound(soundDir + "pop_clip_in.wav");
